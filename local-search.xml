@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>hexo 常用命令</title>
+    <link href="/2020/08/09/hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+    <url>/2020/08/09/hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Hexo-常用命令"><a href="#Hexo-常用命令" class="headerlink" title="Hexo 常用命令"></a>Hexo 常用命令</h1><p>本文记录一下 Hexo 常用命令以及在过程中遇到的一些问题。</p><h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ol><li>创建一篇名为“文章标题”的文章：</li></ol><pre><code class="hljs cmd">hexo n &quot;文章标题&quot;</code></pre><ol start="2"><li>生成静态文件：</li></ol><pre><code class="hljs cmd">hexo g</code></pre><ol start="3"><li>发布：</li></ol><pre><code class="hljs java">hexo s</code></pre><ol start="4"><li>完成后发布到 Git：</li></ol><pre><code class="hljs cmd">hexo g -d</code></pre>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>为什么我要写博客？</title>
     <link href="/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/"/>
     <url>/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/</url>
