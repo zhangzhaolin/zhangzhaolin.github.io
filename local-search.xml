@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>从 ReentrantLock 看 AQS 原理</title>
+    <link href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/"/>
+    <url>/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 id="从-ReentrantLock-看-AQS-原理"><a href="#从-ReentrantLock-看-AQS-原理" class="headerlink" title="从 ReentrantLock 看 AQS 原理"></a>从 ReentrantLock 看 AQS 原理</h1><p><img src="https://images.pexels.com/photos/772650/pexels-photo-772650.jpeg?cs=srgb&dl=pexels-silvia-772650.jpg&fm=jpg"></p><h1 id="0-序"><a href="#0-序" class="headerlink" title="0. 序"></a>0. 序</h1><p>本文参照美团技术论坛：《<a href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从 ReentrantLock 的实现看 AQS 的原理和应用</a>》一章。（站在巨人的肩膀上 XD）</p><p>至于已经有这篇文章了，那为什么我还要写一篇呢？有几个原因：我希望能有自己的理解和认识，还可以加深印象。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+      <category>多线程</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>多线程</tag>
+      
+      <tag>Java</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>今天，我终于冲出了外包的怪圈</title>
     <link href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/"/>
     <url>/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/</url>
