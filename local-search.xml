@@ -8,7 +8,7 @@
     <link href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/"/>
     <url>/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/</url>
     
-    <content type="html"><![CDATA[<h1 id="从-ReentrantLock-看-AQS-原理"><a href="#从-ReentrantLock-看-AQS-原理" class="headerlink" title="从 ReentrantLock 看 AQS 原理"></a>从 ReentrantLock 看 AQS 原理</h1><p><img src="https://images.pexels.com/photos/772650/pexels-photo-772650.jpeg?cs=srgb&dl=pexels-silvia-772650.jpg&fm=jpg"></p><h1 id="0-序"><a href="#0-序" class="headerlink" title="0. 序"></a>0. 序</h1><p>本文参照美团技术论坛：《<a href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从 ReentrantLock 的实现看 AQS 的原理和应用</a>》一章。（站在巨人的肩膀上 XD）</p><p>至于已经有这篇文章了，那为什么我还要写一篇呢？有几个原因：我希望能有自己的理解和认识，还可以加深印象。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="从-ReentrantLock-看-AQS-原理"><a href="#从-ReentrantLock-看-AQS-原理" class="headerlink" title="从 ReentrantLock 看 AQS 原理"></a>从 ReentrantLock 看 AQS 原理</h1><p><img src="https://images.pexels.com/photos/772650/pexels-photo-772650.jpeg?cs=srgb&dl=pexels-silvia-772650.jpg&fm=jpg"></p><h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>本文参照美团技术论坛：《<a href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从 ReentrantLock 的实现看 AQS 的原理和应用</a>》一章。（站在巨人的肩膀上 XD）</p><p>至于已经有这篇文章了，那为什么我还要写一篇呢？有几个原因：我希望能有自己的理解和认识，还可以加深印象。</p><p>本文 <code>AQS</code> 源码所用的 JDK 版本为 JDK 8 。</p><h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><ul><li>自旋锁、MCS 锁、CLH 锁</li><li><code>ReentrantLock</code> 使用方法</li><li>基本数据结构知识：链表、双向链表、队列</li></ul><p><strong>本文尚未完成，敬请期待！</strong></p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul><li><a href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从ReentrantLock的实现看AQS的原理及应用</a></li></ul>]]></content>
     
     
     <categories>
@@ -25,6 +25,8 @@
       <tag>多线程</tag>
       
       <tag>Java</tag>
+      
+      <tag>JUC</tag>
       
     </tags>
     
