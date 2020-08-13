@@ -17,7 +17,7 @@
   <meta name="description" content="">
   <meta name="author" content="张肇霖">
   <meta name="keywords" content="">
-  <title>从 ReentrantLock 看 AQS 原理 - Hexo</title>
+  <title>并发编程中的自旋锁、TicketLock、CLHLock、MCSLock - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -152,7 +152,7 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-08-12 13:08">
+    <time datetime="2020-08-12 14:53">
       2020年8月12日 下午
     </time>
   </div>
@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      159 字
+      879 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1
+      9
        分钟
     </span>
   
@@ -204,18 +204,38 @@
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
-              <h1 id="从-ReentrantLock-看-AQS-原理"><a href="#从-ReentrantLock-看-AQS-原理" class="headerlink" title="从 ReentrantLock 看 AQS 原理"></a>从 ReentrantLock 看 AQS 原理</h1><p><img src="https://images.pexels.com/photos/772650/pexels-photo-772650.jpeg?cs=srgb&dl=pexels-silvia-772650.jpg&fm=jpg" srcset="/img/loading.gif"></p>
-<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>本文参照美团技术论坛：《<a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从 ReentrantLock 的实现看 AQS 的原理和应用</a>》一章。（站在巨人的肩膀上 XD）</p>
-<p>至于已经有这篇文章了，那为什么我还要写一篇呢？有几个原因：我希望能有自己的理解和认识，还可以加深印象。</p>
-<p>本文 <code>AQS</code> 源码所用的 JDK 版本为 JDK 8 。</p>
-<h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><ul>
-<li>自旋锁、MCS 锁、CLH 锁</li>
-<li><code>ReentrantLock</code> 使用方法</li>
-<li>基本数据结构知识：链表、双向链表、队列</li>
-</ul>
-<p><strong>本文尚未完成，敬请期待！</strong></p>
+              <h1 id="并发编程中的自旋锁、TicketLock、CLHLock、MCSLock"><a href="#并发编程中的自旋锁、TicketLock、CLHLock、MCSLock" class="headerlink" title="并发编程中的自旋锁、TicketLock、CLHLock、MCSLock"></a>并发编程中的自旋锁、<code>TicketLock</code>、<code>CLHLock</code>、<code>MCSLock</code></h1><h1 id="1-自旋锁"><a href="#1-自旋锁" class="headerlink" title="1. 自旋锁"></a>1. 自旋锁</h1><p>自旋锁：是指一个线程在获取锁的时候，如果锁已经被其他线程获取，那么该线程将<u>循环等待</u>，然后不断的判断锁是否能够被成功获取，直到获取锁才会退出循环。</p>
+<h2 id="1-1-为什么需要自旋锁"><a href="#1-1-为什么需要自旋锁" class="headerlink" title="1.1 为什么需要自旋锁"></a>1.1 为什么需要自旋锁</h2><p>阻塞或者唤醒一个 Java 线程需要操作系统切换 CPU 状态来完成，这种状态转换需要耗费处理器时间，如果同步代码块的内容过于简单，状态转换消耗的时间有可能比用户代码执行的时间还要长。</p>
+<p>如果物理机器有多个处理器，能够让两个或两个以上的线程同时并行执行，我们可以让请求锁的线程不放弃 CPU 执行时间，而是一直尝试获取锁。</p>
+<p>（至于为什么需要切换 CPU 状态，具体是如何切换 CPU 状态的，估计可以单独拿出一章来说了。这里给自己埋个坑，以后再挖。）</p>
+<blockquote>
+<p>参照美团的自旋锁过程，画了一张图（好的博客从好的流程图开始，好的流程图从好的软件开始）</p>
+</blockquote>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/%E8%87%AA%E6%97%8B%E9%94%81.jpg" srcset="/img/loading.gif"></p>
+<p>自旋锁本身是有缺点的，它并不能代替阻塞。虽然自旋避免了线程的开销，但是它需要占用处理器的时间。<u>如果锁被占用的时间很短，自旋效果自然很好；反之，如果锁被占用时间很长，那么自旋线程只会白白浪费处理器资源。</u>因此，自旋等待时间需要有一定限度。如果自旋超过了<u>限定次数</u>，没有成功获取锁，就应当挂起该自旋线程。</p>
+<p>在 JDK 6 中，默认开启了自旋锁，并且，自旋次数不再使用固定次数（之前默认为 10），而是动态调整的次数，所以被称为自适应自旋，因此不需要 <code>-XX:PreBlockSpin</code> 这个参数了。</p>
+<p>自适应自旋的次数是由<strong>最近</strong>（注意，并不是上一次）在同一个锁上的旋转尝试的<strong>成功/失败率</strong>及<strong>所拥有者的状态来决定的</strong>。如果在同一个锁对象上，自旋等待刚刚成功获取过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也很有可能再次成功，进而它将允许自旋次数更多。另一方面，如果对于某个锁，自旋很少成功获取过锁，那么以后要获取这个锁时将有可能直接省略掉自选过程。</p>
+<p>这里国内很多论坛都引用了《深入理解 Java 虚拟机》原话，原话是这样子的：</p>
+<blockquote>
+<p>是由上一次在同一个锁上的自旋时间及锁的拥有者的状态来决定</p>
+</blockquote>
+<p>但这一句话很明显是错误的，因为和后面说的互相矛盾：</p>
+<blockquote>
+<p>另一方面，如果对于某个锁，自旋很少成功获取过锁，那么以后要获取这个锁时将有可能直接省略掉自旋过程。</p>
+</blockquote>
+<p>这里说的“自旋很少成功”，肯定不单单是上一次。</p>
+<p>这里我参考的是 Java 官网的介绍：</p>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/Java%20%E5%AE%98%E6%96%B9%E5%AF%B9%E8%87%AA%E6%97%8B%E9%94%81%E6%AC%A1%E6%95%B0%E7%9A%84%E6%8F%8F%E8%BF%B0.jpg" srcset="/img/loading.gif"></p>
+<p><strong>未完待续。</strong></p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html">从ReentrantLock的实现看AQS的原理及应用</a></li>
+<li><p><a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/11/15/java-lock.html">《不可不说的 Java 的“锁”事》</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31187779/answer/51053124">HotSpot VM参数-XX:PreBlockSpin 是怎么回事？ - RednaxelaFX的回答 </a></p>
+</li>
+<li><p>《深入理解 Java 虚拟机》 </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/6performance.html#2.1.3">Java SE 6 Performance White Paper</a></p>
+</li>
 </ul>
 
             </article>
@@ -240,8 +260,6 @@
                     
                       <a class="hover-with-bg" href="/tags/JUC/">JUC</a>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-                    
                   </div>
                 
               </div>
@@ -253,18 +271,12 @@
                   <div class="post-prev col-6">
                     
                     
-                      <a href="/2020/08/12/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81TicketLock%E3%80%81CLHLock%E3%80%81MCSLock/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">并发编程中的自旋锁、TicketLock、CLHLock、MCSLock</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </div>
                   <div class="post-next col-6">
                     
                     
-                      <a href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/">
-                        <span class="hidden-mobile">今天，我终于冲出了外包的怪圈</span>
+                      <a href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/">
+                        <span class="hidden-mobile">从 ReentrantLock 看 AQS 原理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -428,7 +440,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "从 ReentrantLock 看 AQS 原理&nbsp;",
+        "并发编程中的自旋锁、TicketLock、CLHLock、MCSLock&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
