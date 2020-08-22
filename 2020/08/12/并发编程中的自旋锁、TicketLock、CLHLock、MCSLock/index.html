@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.9k 字
+      2.7k 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23
+      34
        分钟
     </span>
   
@@ -365,6 +365,118 @@
 <li>线程在<strong>局部变量</strong>中自旋，不断轮询前置节点的状态，如果发现前置节点已经释放了锁，则结束自旋获取锁</li>
 <li>AQS 源码中使用的是 CLH 锁的变种</li>
 </ul>
+<h3 id="3-1-数据结构"><a href="#3-1-数据结构" class="headerlink" title="3.1 数据结构"></a>3.1 数据结构</h3><p>CLH 锁内部有两个 <code>ThreadLocal</code> 变量，一个指向自己的节点（<code>myNode</code>），一个指向前置节点（<code>myPred</code>），一个原子引用变量（<code>tail</code>）指向队尾。CLH 内部还有一个 <code>QNode</code> 内部类，该内部类只有一个 <code>volatile boolean lock</code>。 </p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CLHLock</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> AtomicReference&lt;QNode&gt; tail;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;QNode&gt; myPred;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;QNode&gt; myNode;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CLHLock</span><span class="hljs-params">()</span> </span>&#123;
+        tail = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;(<span class="hljs-keyword">new</span> QNode());
+        myNode = ThreadLocal.withInitial(QNode::<span class="hljs-keyword">new</span>);
+        myPred = ThreadLocal.withInitial(() -&gt; <span class="hljs-keyword">null</span>);
+    &#125;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QNode</span></span>&#123;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">boolean</span> lock; 
+    &#125;
+
+    <span class="hljs-comment">// ...</span>
+&#125;</code></pre>
+
+<h3 id="3-2-CLHLock-获取锁过程"><a href="#3-2-CLHLock-获取锁过程" class="headerlink" title="3.2 CLHLock 获取锁过程"></a>3.2 <code>CLHLock</code> 获取锁过程</h3><ol>
+<li>当某线程进入时，为该线程分配一个类型为 <code>QNode</code> 的节点（<code>myNode</code>）以及 <code>myPred</code>（初始值为空）</li>
+<li>设置 <code>lock</code> 为 true，表示尝试获取锁</li>
+<li>将当前线程的前置节点（<code>myPred</code>）指向 <code>tail</code>（上一个线程）；将 <code>tail</code> 指向该线程（<code>myNode</code>），表示该线程为当前队列的队尾（该过程为原子操作）</li>
+<li>判断前置节点（<code>myPred</code>）的 <code>lock</code> 是否为 false。如果为 false，表明上个线程已经解锁，该线程可以加锁了；如果为 true，表明上个线程还未解锁，该线程将持续自旋。</li>
+</ol>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span> </span>&#123;
+    QNode qNode = myNode.get();
+    qNode.setLock(<span class="hljs-keyword">true</span>);
+    QNode predNode = tail.getAndSet(qNode);
+    myPred.set(predNode);
+    <span class="hljs-keyword">while</span> (predNode.isLock());
+&#125;</code></pre>
+
+<h3 id="3-3-CLHLock-释放锁过程"><a href="#3-3-CLHLock-释放锁过程" class="headerlink" title="3.3 CLHLock 释放锁过程"></a>3.3 <code>CLHLock</code> 释放锁过程</h3><ol>
+<li>将当前线程的 lock 设置为 false</li>
+<li>将自身节点指向前置节点</li>
+</ol>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span></span>&#123;
+    QNode qnode = myNode.get();
+    qnode.setLock(<span class="hljs-keyword">false</span>);
+    myNode.set(myPred.get());
+&#125;</code></pre>
+
+<h3 id="3-4-完整代码"><a href="#3-4-完整代码" class="headerlink" title="3.4 完整代码"></a>3.4 完整代码</h3><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CLHLock</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> AtomicReference&lt;QNode&gt; tail;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;QNode&gt; myPred;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ThreadLocal&lt;QNode&gt; myNode;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CLHLock</span><span class="hljs-params">()</span> </span>&#123;
+        tail = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;(<span class="hljs-keyword">new</span> QNode());
+        myNode = ThreadLocal.withInitial(QNode::<span class="hljs-keyword">new</span>);
+        myPred = ThreadLocal.withInitial(() -&gt; <span class="hljs-keyword">null</span>);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span> </span>&#123;
+        QNode qNode = myNode.get();
+        qNode.setLock(<span class="hljs-keyword">true</span>);
+        <span class="hljs-comment">// 获取并记录上一个节点的位置，并将 tail 指向当前节点（线程）</span>
+        QNode predNode = tail.getAndSet(qNode);
+        <span class="hljs-comment">// 设置上一个节点</span>
+        myPred.set(predNode);
+        <span class="hljs-comment">// 判断上一个节点的 lock 是否为 false，如果为 true，则该线程一直自旋等待</span>
+        <span class="hljs-keyword">while</span> (predNode.isLock()) ;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span> </span>&#123;
+        QNode qNode = myNode.get();
+        qNode.setLock(<span class="hljs-keyword">false</span>);
+        <span class="hljs-comment">// 防止死锁</span>
+        myNode.set(myPred.get());
+    &#125;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QNode</span> </span>&#123;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">boolean</span> lock = <span class="hljs-keyword">false</span>;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isLock</span><span class="hljs-params">()</span> </span>&#123;
+            <span class="hljs-keyword">return</span> lock;
+        &#125;
+        <span class="hljs-function"><span class="hljs-keyword">public</span> QNode <span class="hljs-title">setLock</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> lock)</span> </span>&#123;
+            <span class="hljs-keyword">this</span>.lock = lock;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        &#125;
+    &#125;
+
+&#125;</code></pre>
+
+<h3 id="3-5-看图分析"><a href="#3-5-看图分析" class="headerlink" title="3.5 看图分析"></a>3.5 看图分析</h3><h4 id="3-5-1-一个线程"><a href="#3-5-1-一个线程" class="headerlink" title="3.5.1 一个线程"></a>3.5.1 一个线程</h4><p>如果只是一个线程在做操作的话，分析起来比较简单：</p>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B.png" srcset="/img/loading.gif"></p>
+<h4 id="3-5-2-两个线程争夺临界区资源"><a href="#3-5-2-两个线程争夺临界区资源" class="headerlink" title="3.5.2 两个线程争夺临界区资源"></a>3.5.2 两个线程争夺临界区资源</h4><p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%89%E5%A4%BA%E4%B8%B4%E7%95%8C%E5%8C%BA%E8%B5%84%E6%BA%90.png" srcset="/img/loading.gif"></p>
+<h3 id="3-6-一步一步看-unlock-方法里面的防止死锁问题"><a href="#3-6-一步一步看-unlock-方法里面的防止死锁问题" class="headerlink" title="3.6 一步一步看 unlock 方法里面的防止死锁问题"></a>3.6 一步一步看 <code>unlock</code> 方法里面的防止死锁问题</h3><p>假设有两个线程 A、B 正在进行 lock、unlock 操作，现在线程 B 正在进行自旋操作，判断 A 是否释放了临界区资源。</p>
+<pre><code class="hljs java"><span class="hljs-keyword">while</span>(myPred.isLock());</code></pre>
+
+<p>假设线程 A 释放资源时没有最后一行的操作：</p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span></span>&#123;
+    QNode qNode = myNode.get();
+    qNode.setLock(<span class="hljs-keyword">false</span>);
+    <span class="hljs-comment">// myNode.set(myPred.get());</span>
+&#125;</code></pre>
+
+<p>现在，假设线程 A 释放了资源，但是，由于线程 B 出现了一些问题，或者说，线程 A 又很快的进行了下一轮的 <code>lock()</code> 操作：</p>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_unlock%E8%87%AA%E6%97%8B%E6%AD%BB%E9%94%81.png" srcset="/img/loading.gif"></p>
+<p>现在，两个线程相互等待对方的 lock，造成了死锁。</p>
+<p>正确方式是：在 <code>unlock</code> 中加上了最后一行：</p>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span></span>&#123;
+    QNode qNode = myNode.get();
+    qNode.setLock(<span class="hljs-keyword">false</span>);
+    myNode.set(myPred.get());
+&#125;</code></pre>
+
+<p>这样，Thread B 中的 <code>myPred</code> 和 Thread A 中的 <code>myNode</code> 就不是同一个对象了。</p>
 <h2 id="4-MCSLock"><a href="#4-MCSLock" class="headerlink" title="4. MCSLock"></a>4. <code>MCSLock</code></h2><h2 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5. 参考资料"></a>5. 参考资料</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/11/15/java-lock.html">《不可不说的 Java 的“锁”事》</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31187779/answer/51053124">HotSpot VM参数-XX:PreBlockSpin 是怎么回事？ - RednaxelaFX的回答 </a></li>
