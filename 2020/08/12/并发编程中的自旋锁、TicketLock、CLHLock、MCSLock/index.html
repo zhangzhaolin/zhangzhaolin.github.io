@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      3.6k 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      34
+      46
        分钟
     </span>
   
@@ -214,7 +214,7 @@
 <p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/%E8%87%AA%E6%97%8B%E9%94%81.jpg" srcset="/img/loading.gif"></p>
 <p>自旋锁本身是有缺点的，它并不能代替阻塞。虽然自旋避免了线程的开销，但是它需要占用处理器的时间。<u>如果锁被占用的时间很短，自旋效果自然很好；反之，如果锁被占用时间很长，那么自旋线程只会白白浪费处理器资源。</u>因此，自旋等待时间需要有一定限度。如果自旋超过了<u>限定次数</u>，没有成功获取锁，就应当挂起该自旋线程。</p>
 <h3 id="1-2-自适应自旋"><a href="#1-2-自适应自旋" class="headerlink" title="1.2 自适应自旋"></a>1.2 自适应自旋</h3><p>在 JDK 6 中，默认开启了自旋锁，并且，自旋次数不再使用固定次数（之前默认为 10），而是动态调整的次数，所以被称为自适应自旋，因此不需要 <code>-XX:PreBlockSpin</code> 这个参数了。</p>
-<p>自适应自旋的次数是由<strong>最近</strong>（注意，并不是上一次）在同一个锁上的旋转尝试的<strong>成功/失败率</strong>及<strong>所拥有者的状态来决定的</strong>。如果在同一个锁对象上，自旋等待刚刚成功获取过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也很有可能再次成功，进而它将允许自旋次数更多。另一方面，如果对于某个锁，自旋很少成功获取过锁，那么以后要获取这个锁时将有可能直接省略掉自选过程。</p>
+<p>自适应自旋的次数是由<strong>最近</strong>（注意，并不是上一次）在同一个锁上的旋转尝试的<strong>成功/失败率</strong>及<strong>所拥有者的状态来决定的</strong>。如果在同一个锁对象上，自旋等待刚刚成功获取过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也很有可能再次成功，进而它将允许自旋次数更多。另一方面，如果对于某个锁，自旋很少成功获取过锁，那么以后要获取这个锁时将有可能直接省略掉自旋过程。</p>
 <p>这里国内很多论坛都引用了《深入理解 Java 虚拟机》原话，原话是这样子的：</p>
 <blockquote>
 <p>是由上一次在同一个锁上的自旋时间及锁的拥有者的状态来决定</p>
@@ -454,8 +454,8 @@
 &#125;</code></pre>
 
 <h3 id="3-5-看图分析"><a href="#3-5-看图分析" class="headerlink" title="3.5 看图分析"></a>3.5 看图分析</h3><h4 id="3-5-1-一个线程"><a href="#3-5-1-一个线程" class="headerlink" title="3.5.1 一个线程"></a>3.5.1 一个线程</h4><p>如果只是一个线程在做操作的话，分析起来比较简单：</p>
-<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B.png" srcset="/img/loading.gif"></p>
-<h4 id="3-5-2-两个线程争夺临界区资源"><a href="#3-5-2-两个线程争夺临界区资源" class="headerlink" title="3.5.2 两个线程争夺临界区资源"></a>3.5.2 两个线程争夺临界区资源</h4><p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%89%E5%A4%BA%E4%B8%B4%E7%95%8C%E5%8C%BA%E8%B5%84%E6%BA%90.png" srcset="/img/loading.gif"></p>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B.jpg" srcset="/img/loading.gif"></p>
+<h4 id="3-5-2-两个线程争夺临界区资源"><a href="#3-5-2-两个线程争夺临界区资源" class="headerlink" title="3.5.2 两个线程争夺临界区资源"></a>3.5.2 两个线程争夺临界区资源</h4><p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%89%E5%A4%BA%E4%B8%B4%E7%95%8C%E5%8C%BA%E8%B5%84%E6%BA%90.jpg" srcset="/img/loading.gif"></p>
 <h3 id="3-6-一步一步看-unlock-方法里面的防止死锁问题"><a href="#3-6-一步一步看-unlock-方法里面的防止死锁问题" class="headerlink" title="3.6 一步一步看 unlock 方法里面的防止死锁问题"></a>3.6 一步一步看 <code>unlock</code> 方法里面的防止死锁问题</h3><p>假设有两个线程 A、B 正在进行 lock、unlock 操作，现在线程 B 正在进行自旋操作，判断 A 是否释放了临界区资源。</p>
 <pre><code class="hljs java"><span class="hljs-keyword">while</span>(myPred.isLock());</code></pre>
 
@@ -467,7 +467,7 @@
 &#125;</code></pre>
 
 <p>现在，假设线程 A 释放了资源，但是，由于线程 B 出现了一些问题，或者说，线程 A 又很快的进行了下一轮的 <code>lock()</code> 操作：</p>
-<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_unlock%E8%87%AA%E6%97%8B%E6%AD%BB%E9%94%81.png" srcset="/img/loading.gif"></p>
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_unlock%E8%87%AA%E6%97%8B%E6%AD%BB%E9%94%81.jpg" srcset="/img/loading.gif"></p>
 <p>现在，两个线程相互等待对方的 lock，造成了死锁。</p>
 <p>正确方式是：在 <code>unlock</code> 中加上了最后一行：</p>
 <pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span></span>&#123;
@@ -476,8 +476,103 @@
     myNode.set(myPred.get());
 &#125;</code></pre>
 
+<p><img src="https://zhangzhaolin-1252667462.cos.ap-nanjing.myqcloud.com/2020/08/CLHLock_unlock%E8%87%AA%E6%97%8B%E4%B8%8D%E9%80%A0%E6%88%90%E6%AD%BB%E9%94%81.jpg" srcset="/img/loading.gif"></p>
 <p>这样，Thread B 中的 <code>myPred</code> 和 Thread A 中的 <code>myNode</code> 就不是同一个对象了。</p>
-<h2 id="4-MCSLock"><a href="#4-MCSLock" class="headerlink" title="4. MCSLock"></a>4. <code>MCSLock</code></h2><h2 id="5-参考资料"><a href="#5-参考资料" class="headerlink" title="5. 参考资料"></a>5. 参考资料</h2><ul>
+<h2 id="4-MCSLock"><a href="#4-MCSLock" class="headerlink" title="4. MCSLock"></a>4. <code>MCSLock</code></h2><h3 id="4-1-数据结构"><a href="#4-1-数据结构" class="headerlink" title="4.1 数据结构"></a>4.1 数据结构</h3><p>与 <code>CLHLock</code> 非常类似，<code>MCSLock</code> 有一个内部类 <code>Node</code>，内部类中存放 <code>volatile boolean lock</code> 以及 <code>volatile Node next</code> 信息，<code>MCSLock</code> 有两个字段，原子引用变量 <code>tail</code> 指向队尾，线程局部变量 <code>node</code>。</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MCSLock</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> AtomicReference&lt;Node&gt; tail = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;();
+    <span class="hljs-keyword">private</span> ThreadLocal&lt;Node&gt; node = ThreadLocal.withInitial(Node::<span class="hljs-keyword">new</span>);
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>&#123;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">boolean</span> lock = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Node next = <span class="hljs-keyword">null</span>;
+    &#125;
+&#125;</code></pre>
+
+<h3 id="4-2-MCSLock-加锁过程"><a href="#4-2-MCSLock-加锁过程" class="headerlink" title="4.2 MCSLock 加锁过程"></a>4.2 <code>MCSLock</code> 加锁过程</h3><p>当某个线程试图获取锁时：</p>
+<ol>
+<li>设置当前节点的 <code>lock</code> 为 true</li>
+<li>记录上一个节点的位置（<code>tail</code>），并将 <code>tail</code> 指向当前节点（原子操作）</li>
+<li>判断上个节点是否存在，如果不存在，当前线程可直接访问临界区；如果存在，设置上个节点的 <code>next</code> 为当前节点，并自旋判断自身 <code>lock</code> 是否为 false</li>
+</ol>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span></span>&#123;
+    Node current = node.get();
+    current.lock = <span class="hljs-keyword">true</span>;
+    Node pred = tail.getAndSet(current);
+    <span class="hljs-keyword">if</span>(pred != <span class="hljs-keyword">null</span>)&#123;
+        pred.next = current;
+        <span class="hljs-keyword">while</span>(current.lock);
+    &#125;
+&#125;</code></pre>
+
+<h3 id="4-3-MCSLock-解锁过程"><a href="#4-3-MCSLock-解锁过程" class="headerlink" title="4.3 MCSLock 解锁过程"></a>4.3 <code>MCSLock</code> 解锁过程</h3><p>当某个线程解锁时：</p>
+<ol>
+<li>判断当前线程是否有下个节点（<code>next != null</code>）</li>
+<li>如果存在下一个节点，将下一个节点的 <code>lock</code> 置为 <code>false</code> ，并将当前节点的 <code>next</code> 置空。</li>
+<li>如果不存在下一个节点，尝试将 <code>tail</code> 的值设置为空；如果 <code>tail</code> 被其他线程修改，当前线程会自旋等待自身 <code>next</code> 是否为空。</li>
+</ol>
+<pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span></span>&#123;
+    Node current = node.get();
+    <span class="hljs-keyword">if</span>(current.next == <span class="hljs-keyword">null</span>)&#123;
+        <span class="hljs-keyword">if</span>(tail.compareAndSet(current,<span class="hljs-keyword">null</span>))&#123;
+            <span class="hljs-keyword">return</span> ;
+        &#125;
+        <span class="hljs-keyword">while</span>(current.next == <span class="hljs-keyword">null</span>);
+    &#125;
+    current.next.lock = <span class="hljs-keyword">false</span>;
+    current.next = <span class="hljs-keyword">null</span>;
+&#125;</code></pre>
+
+<h3 id="4-4-完整代码"><a href="#4-4-完整代码" class="headerlink" title="4.4 完整代码"></a>4.4 完整代码</h3><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MCSLock</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> AtomicReference&lt;Node&gt; tail = <span class="hljs-keyword">new</span> AtomicReference&lt;&gt;();
+    <span class="hljs-keyword">private</span> ThreadLocal&lt;Node&gt; node = ThreadLocal.withInitial(Node::<span class="hljs-keyword">new</span>);
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">lock</span><span class="hljs-params">()</span> </span>&#123;
+        Node current = node.get();
+        current.lock = <span class="hljs-keyword">true</span>;
+        Node pred = tail.getAndSet(current);
+        <span class="hljs-keyword">if</span> (pred != <span class="hljs-keyword">null</span>) &#123;
+            pred.next = current;
+            <span class="hljs-keyword">while</span> (current.lock) &#123;
+
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlock</span><span class="hljs-params">()</span> </span>&#123;
+        Node current = node.get();
+        <span class="hljs-keyword">if</span> (current.next == <span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-keyword">if</span> (tail.compareAndSet(current, <span class="hljs-keyword">null</span>)) &#123;
+                <span class="hljs-keyword">return</span>;
+            &#125;
+            <span class="hljs-keyword">while</span> (current.next == <span class="hljs-keyword">null</span>) &#123;
+
+            &#125;
+        &#125;
+        current.next.lock = <span class="hljs-keyword">false</span>;
+        current.next = <span class="hljs-keyword">null</span>;
+    &#125;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span> </span>&#123;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">boolean</span> lock = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Node next = <span class="hljs-keyword">null</span>;
+    &#125;
+
+&#125;</code></pre>
+
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><ol>
+<li>线程切换需要耗费处理器时间，如果访问临界区资源的逻辑比较简单，那么消耗处理器所用时间可能要比访问临界区所用时间还要多，为此引入了自旋。</li>
+<li>自旋可以让当前线程不放弃 CPU 等待时间，一直等待获取锁。</li>
+<li>如果一直没有自旋成功，会消耗大量的处理器资源，为了减少这种消耗，引入了自旋次数，JDK 6 之前默认自旋次数为 10。JDK 6 之后引入了自适应自旋锁。</li>
+<li>自适应自旋次数是最近在同一个锁上的旋转成功/失败率以及所持有者的状态决定的。</li>
+<li>常用的自旋实现有 <code>TicketLock</code> ，<code>CLHLock</code>，<code>MCSLock</code></li>
+<li><code>TicketLock</code> 实现原理是入队票据和出队票据，每当线程进入时，会记录当前入队票据并将入队票据加一，并将之前的入队票据与出对票据做对比，如果相等，则自旋成功。线程退出时，会将出队票据递增。</li>
+<li><code>CLHLock</code> 实现原理是维护一个 FIFO 的队列，当前线程进入时，会将自身 <code>lock</code> 设置为 true，并等待上一个线程的 <code>lock</code> 为 false；线程退出时，将自身 <code>lock</code> 设置为 <code>false</code>，然后将自身节点指向前一个结点。</li>
+<li><code>MCSLock</code> 原理与 <code>CLHLock</code> 类似，但是 <code>MCSLock</code> 会自旋自身 <code>lock</code>；线程退出时，如果有下一个节点，将下一个节点的 <code>lock</code> 设置为 false，并将自身的 <code>next</code> 置空。如果没有下一个节点，会尝试将 <code>tail</code> 置空。</li>
+</ol>
+<h2 id="6-参考资料"><a href="#6-参考资料" class="headerlink" title="6. 参考资料"></a>6. 参考资料</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/11/15/java-lock.html">《不可不说的 Java 的“锁”事》</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/31187779/answer/51053124">HotSpot VM参数-XX:PreBlockSpin 是怎么回事？ - RednaxelaFX的回答 </a></li>
 <li>《深入理解 Java 虚拟机》 </li>
