@@ -163,7 +163,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      3k 字
     </span>
   
 
@@ -173,7 +173,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      30
+      32
        分钟
     </span>
   
@@ -233,63 +233,67 @@
 <p>讲真，在现在看来，这里面的很多东西，我还没有掌握……两年之前我对这些只是嗤之以鼻，觉得这些都是造火箭的东西，不去也罢，没想到……每个公司都会问，真的。</p>
 <h1 id="2-有迹可循"><a href="#2-有迹可循" class="headerlink" title="2. 有迹可循"></a>2. 有迹可循</h1><p>因为我不了解中间件、分布式这些东西，所以面试的时候，面试官都会问我其他内容了，比方说，Java 基础、框架、JVM、设计模式这些，下面给大家说说一个月以来大家都在问什么：</p>
 <h2 id="2-1-基础"><a href="#2-1-基础" class="headerlink" title="2.1 基础"></a>2.1 基础</h2><ul>
-<li><p>Java 特性，Java 基本类型以及占用的字节数</p>
-</li>
-<li><p>Object 常用方法：<code>equals</code>、<code>hashcode</code>、<code>wait</code>、<code>notify</code>、<code>notifyAll</code>、<code>toString</code>、<code>finalize</code>、<code>getClass</code></p>
-</li>
-<li><p>static 几种用法（类似于孔乙己中问茴香豆有几种写法）</p>
-</li>
-<li><p>final</p>
-</li>
-<li><p>String 常用方法，有个面试官问我 <code>&quot;a,&quot;.split(&quot;,&quot;)</code>，<code>&quot;,a&quot;.split(&quot;,&quot;)</code>区别</p>
-</li>
-<li><p>重写和重载的区别，注意重写返回值可以相同也可以不同，但必须是父类返回值的子类型。还要注意受检异常</p>
-</li>
-<li><p>受检异常和非受检异常</p>
-</li>
-<li><p>反射机制，常用反射类</p>
-</li>
-<li><p>泛型上下限通配符，桥方法，泛型需要注意的点</p>
-</li>
-<li><p>几个内部类区别：普通、匿名、静态、局部</p>
-</li>
-<li><p>动态代理，<strong>经常会问</strong>。还会问 Java 动态代理和 CGLIB 区别</p>
-</li>
-<li><p>集合：<code>ArrayList</code> 初始化过程，扩容机制；<code>HashMap</code> 初始化过程，初始容量，扩容机制；<code>ConcurrentHashMap</code> 为何是线程安全的？<code>HashSet</code> 底层是什么？（不按常理出牌的面试官）<code>LinkedList</code> 、<code>ArratyList</code>、<code>Vector</code> 相同点以及不同点</p>
-</li>
-<li><p>IO：问的不多，有一个笔试题写一个文件流转字节，但是估计大厂会问 NIO 和 IO 的区别</p>
-</li>
-<li><p>数据库：经常会在笔试题让你写原生 Java 查询数据库，考查基础知识点</p>
-</li>
+<li>Java 特性，Java 基本类型以及占用的字节数</li>
+<li>Object 常用方法：<code>equals</code>、<code>hashcode</code>、<code>wait</code>、<code>notify</code>、<code>notifyAll</code>、<code>toString</code>、<code>finalize</code>、<code>getClass</code></li>
+<li>为什么重写完 <code>equals</code> 还要重写 <code>hashcode</code>？</li>
+<li>static 几种用法（类似于孔乙己中问茴香豆有几种写法）</li>
+<li>final</li>
+<li>String 常用方法，有个面试官问我 <code>&quot;a,&quot;.split(&quot;,&quot;)</code>，<code>&quot;,a&quot;.split(&quot;,&quot;)</code>区别</li>
+<li>重写和重载的区别</li>
+<li>受检异常和非受检异常</li>
+<li>反射机制，常用反射类</li>
+<li>泛型上下限通配符，桥方法，泛型需要注意的点</li>
+<li>几个内部类区别：普通、匿名、静态、局部</li>
+<li>动态代理，<strong>经常会问</strong>。还会问 Java 动态代理和 CGLIB 区别</li>
+<li>集合：<code>ArrayList</code> 初始化过程，扩容机制；<code>HashMap</code> 初始化过程，初始容量，扩容机制、为什么扩容两倍；<code>ConcurrentHashMap</code> 为何是线程安全的？<code>HashSet</code> 底层是什么？（不按常理出牌的面试官）<code>LinkedList</code> 、<code>ArratyList</code>、<code>Vector</code> 相同点以及不同点</li>
+<li>还是集合：<code>HashMap</code> 是否允许空值？<code>HashMap</code> 与 <code>HashTable</code> 区别？ </li>
+<li>IO：问的不多，有一个笔试题写一个文件流转字节，但是估计大厂会问 NIO 和 IO 的区别</li>
+<li>数据库：经常会在笔试题让你写原生 Java 查询数据库，考查基础知识点</li>
 </ul>
 <h2 id="2-2-多线程"><a href="#2-2-多线程" class="headerlink" title="2.2 多线程"></a>2.2 多线程</h2><ul>
-<li>说一说什么是多线程（致命问题）</li>
-<li>线程的几大状态，创建线程的几种方式</li>
-<li>进程和线程有什么区别</li>
-<li>多线程用到哪些类（底层关键字 volatile、synchronized，还有 CAS 思想； AQS、Lock、<code>BlockingQueue</code>、并发集合、原子类）</li>
-<li>volatile、synchronized 底层（没听错，经常会问底层，虽然我不知道有什么用）</li>
-<li>synchronized 锁方法和锁代码块的区别</li>
-<li>什么是 CAS？ABA 具体是在说什么</li>
-<li>AQS 底层原理</li>
-<li>Lock 和 Synchronized 区别，为什么 Lock 要快一些</li>
-<li>Lock 几种实现以及原理</li>
-<li>原子类几种实现以及原理</li>
-<li>并发集合（<code>ConcurrentHashMap</code>，<code>CopyOnWriteList</code>，<code>ConcurrentLinkedQueue</code>，<code>BlockingQueue</code>等）以及底层实现</li>
-<li>几种线程池，以及底层实现（核心线程数、最大线程数、线程拒绝策略、阻塞队列这些都是重点）</li>
-<li>信号量、计时器、栅栏（没问我，但是估计很多公司也会问）</li>
-<li><code>ThreadLocal</code> 理解、实现方式、使用场景</li>
-<li>与多线程密切相关的单例模式</li>
+<li><p>说一说什么是多线程（致命问题）</p>
+</li>
+<li><p>线程的几大状态，创建线程的几种方式</p>
+</li>
+<li><p>进程和线程有什么区别，并发和并行的区别，并发和多线程的区别</p>
+</li>
+<li><p>多线程用到哪些类（底层关键字 volatile、synchronized，还有 CAS 思想； AQS、Lock、<code>BlockingQueue</code>、并发集合、原子类）</p>
+</li>
+<li><p>volatile、synchronized 底层（没听错，经常会问底层，虽然我不知道有什么用）</p>
+</li>
+<li><p>synchronized 锁方法和锁代码块的区别</p>
+</li>
+<li><p>什么是 CAS？ABA 具体是在说什么</p>
+</li>
+<li><p>AQS 底层原理</p>
+</li>
+<li><p>Lock 和 Synchronized 区别</p>
+</li>
+<li><p>Lock 几种实现以及原理</p>
+</li>
+<li><p>原子类几种实现以及原理</p>
+</li>
+<li><p>并发集合（<code>ConcurrentHashMap</code>，<code>CopyOnWriteList</code>，<code>ConcurrentLinkedQueue</code>，<code>BlockingQueue</code>等）</p>
+</li>
+<li><p>几种线程池，以及底层实现（核心线程数、最大线程数、线程拒绝策略、阻塞队列这些都是重点）</p>
+</li>
+<li><p>信号量、计时器、栅栏</p>
+</li>
+<li><p><code>ThreadLocal</code> 理解、实现方式、使用场景</p>
+</li>
+<li><p>与多线程密切相关的单例模式</p>
+</li>
 </ul>
 <h2 id="2-3-设计模式"><a href="#2-3-设计模式" class="headerlink" title="2.3 设计模式"></a>2.3 设计模式</h2><p>如果你在简历上写设计模式（即使你不写），面试官也会问你设计模式，还好之前的公司员工有让我了解过，这里需要感谢他一下。常见的会问到：</p>
 <ul>
-<li>单例模式（懒汉、饿汉、枚举、内部类），为什么懒汉要用双锁</li>
+<li>单例模式（懒汉、饿汉、枚举、内部类），为什么懒汉要用双锁，什么情况下会用到单例模式</li>
 <li>策略模式</li>
 <li>建造者模式（因为我简历里写了，所以就问到了）</li>
 <li>装饰者模式</li>
 <li>适配器模式</li>
 <li>观察者模式</li>
 <li>工厂和抽象工厂模式</li>
-<li>模板模式（太简单几乎不会问到）</li>
+<li>模板模式</li>
 <li>代理模式（静态代理、动态代理区别也会问）</li>
 </ul>
 <p>希望大家不要死记硬背设计模式，要不然非常容易露馅。知其然知其所以然才是最重要的。</p>
@@ -297,26 +301,29 @@
 <ul>
 <li>Spring 作用，两大特性</li>
 <li>Spring 常用注解</li>
-<li>自己的语言介绍一下 IOC（我自己原创的，面试官觉得很有意思）</li>
+<li>自己的语言介绍一下 IOC</li>
 <li>AOP 术语：切面、切点、横切点、前置、后置、环绕</li>
 <li>AOP 实现原理，CGLIB 与 Java 动态代理区别</li>
 <li>Spring Bean scope</li>
-<li>Spring Bean 生命周期（这个真的很恶心，完全靠记忆力）</li>
+<li>Spring Bean 生命周期（这个真的很恶心）</li>
 <li>Spring 与 Spring Boot 区别是什么</li>
 <li>Spring Boot 常用注解（注意不是 Spring 注解）</li>
 <li><code>@Controller</code> 、<code>@Service</code>、<code>@Repository</code>相同点和不同点</li>
+<li><code>@Controller</code>、<code>@RestController</code> 区别</li>
 <li>事务传播机制以及 <code>@Transactional</code> 常用属性</li>
 </ul>
 <h2 id="2-5-数据库"><a href="#2-5-数据库" class="headerlink" title="2.5 数据库"></a>2.5 数据库</h2><p>由于面试上写的 MySQL，所以面试官是以这个为主问的。</p>
 <ul>
 <li>聚簇索引和非聚簇索引区别</li>
+<li>索引的几种类型</li>
 <li><code>InnoDB</code> 和 <code>MyISAM</code> 区别</li>
 <li>乐观锁、悲观锁、共享锁、排他锁、表锁、行锁</li>
+<li>什么情况下用行锁，什么情况下用表锁</li>
 <li>隔离级别以及脏读、幻读、不可重复读</li>
-<li>为什么需要索引，如何理解索引优缺点（注意这个不要背，而是真正的去理解）</li>
+<li>为什么需要索引，如何理解索引优缺点</li>
 <li>索引失效场景</li>
 <li>Explain</li>
-<li>LEFT JOIN、RIGHT JOIN、INNER JOIN 区别（我没被问到这个）</li>
+<li>LEFT JOIN、LEFT OUTER JOIN、RIGHT JOIN、INNER JOIN 区别</li>
 <li>数据库三范式</li>
 <li>如何设计数据库（多对多、一对多如何设计；以及一些数据类型的优化）</li>
 <li>B+ 树，为什么用 B+ 树（这里又引出了数据结构）</li>
@@ -326,7 +333,7 @@
 <li>常见的数据结构（重点看下 bitmap）</li>
 <li>树、二叉树、平衡树、红黑树（为什么用红黑而不用平衡树；不过还好没让写红黑树变色以及左右旋转）</li>
 <li>B 树和 B+ 树区别</li>
-<li>常见排序（虽然没有问，但这个绝对是重点）</li>
+<li>常见排序以及时间复杂度</li>
 <li>算法就没有具体的问了，刷下力扣就可以了，中小厂一般都是简单程度的，当然大家不要觉得简单就不去刷</li>
 </ul>
 <h2 id="2-7-MyBatis"><a href="#2-7-MyBatis" class="headerlink" title="2.7 MyBatis"></a>2.7 <code>MyBatis</code></h2><p>由于我简历写的是 Hibernate 和 Spring data JPA，所以这里就不写 <code>MyBatis</code> 的面试题目了。</p>
@@ -335,8 +342,16 @@
 <li>垃圾回收算法</li>
 <li>JVM 内存模型</li>
 <li>JVM 中对象存储空间</li>
+<li>什么情况下会栈溢出，什么情况下会 OOM</li>
 <li>JVM 优化</li>
+<li>JVM 偏向锁、轻量级锁、重量级锁</li>
 </ul>
+<h2 id="2-9-逻辑思维题（日了狗）"><a href="#2-9-逻辑思维题（日了狗）" class="headerlink" title="2.9 逻辑思维题（日了狗）"></a>2.9 逻辑思维题（日了狗）</h2><ol>
+<li>两个蜡烛，一根蜡烛燃烧完需要一个小时，问如何让两根蜡烛在四十五分钟燃烧完</li>
+<li>六个水杯，有水有水有水无水无水无水，移动一个水杯，变成：有水无水有水无水有水无水</li>
+<li>三门问题</li>
+<li>20 张光滑的扑克牌，八张正面朝上，其余朝下。怎么样在闭着眼睛的情况下将扑克牌分成两组，使两组正面朝上的数量一样多？</li>
+</ol>
 <h1 id="3-面试总结"><a href="#3-面试总结" class="headerlink" title="3. 面试总结"></a>3. 面试总结</h1><p>面试造火箭，入职拧螺丝。在疫情当下，工作可谓是相当的难找。不难看出，很多题目都有一种“学术”在里面，例如什么底层，什么垃圾回收机制，什么 B+ 树。我们不仅要去应对这些内容，我们还要理解它们。<u>为什么不建议大家去外包公司？</u>因为没有特别新的技术，你看我不了解中间件，不了解消息队列，不了解微服务，真的很难去应聘合适的工作。我之前的公司没有这种场景去使用这些，所以根本没办法接触这些东西。像多线程这些都是我自学的。当面试官问到使用多线程场景的时候，我基本都说不上来。</p>
 <p>环境确实非常重要，我之前一直认为，JVM 这种东西最起码得高级才懂吧？多线程底层最起码三年以上才知道吧？原来，一两年的工作经验也需要掌握这些内容。</p>
 <h1 id="4-给新人推荐几本书"><a href="#4-给新人推荐几本书" class="headerlink" title="4. 给新人推荐几本书"></a>4. 给新人推荐几本书</h1><p>买技术书买新不买旧，买国外不买国内，书的评价好不好最好使用豆瓣阅读查一下。这几本书都是我翻过觉得不错的：</p>
