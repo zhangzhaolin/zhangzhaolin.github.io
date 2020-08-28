@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-
+<html lang="zh-CN" >
 
 
 
@@ -25,7 +25,7 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
 
 
 
@@ -38,6 +38,7 @@
 
 
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.0.0"></head>
 
 
@@ -120,21 +121,22 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
           </li>
+        
         
       </ul>
     </div>
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/default.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
+          <div class="container page-header text-center fade-in-up">
             <span class="h2" id="subtitle">
               
             </span>
@@ -167,23 +169,30 @@
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/08/12/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81TicketLock%E3%80%81CLHLock%E3%80%81MCSLock/">并发编程中的自旋锁、TicketLock、CLHLock、MCSLock</a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2020/08/12/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81TicketLock%E3%80%81CLHLock%E3%80%81MCSLock/">并发编程中的自旋锁、TicketLock、CLHLock、MCSLock</a>
+      </h1>
 
-      <a href="/2020/08/12/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81TicketLock%E3%80%81CLHLock%E3%80%81MCSLock/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/12/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E8%87%AA%E6%97%8B%E9%94%81%E3%80%81TicketLock%E3%80%81CLHLock%E3%80%81MCSLock/">
           
-        
-        <div>并发编程中的自旋锁、TicketLock、CLHLock、MCSLock
+          
+            
+          
+          并发编程中的自旋锁、TicketLock、CLHLock、MCSLock
 1. 自旋锁自旋锁：是指一个线程在获取锁的时候，如果锁已经被其他线程获取，那么该线程将循环等待，然后不断的判断锁是否能够被成功获取，直到获取锁才会退出循环。
-1.1 为什么需要自旋锁阻塞或者唤醒一个 Java 线程需要操作系统切换 CPU 状态来完成，这种状态转换需要耗费处理器时间，如果同步代码块的内容过于简单，状态转换消耗</div>
-      </a>
+1.1 为什么需要自旋锁阻塞或者唤醒一个 Java 线程需要操作系统切换 CPU 状态来完成，这种状态转换需要耗费处理器时间，如果同步代码块的内容过于简单，状态转换消耗
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-12
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-12 14:53" pubdate>
+              2020-08-12
+            </time>
           </div>
         
         
@@ -207,33 +216,40 @@
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/">从 ReentrantLock 看 AQS 原理</a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/">从 ReentrantLock 看 AQS 原理</a>
+      </h1>
 
-      <a href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/">
           
-        
-        <div>从 ReentrantLock 看 AQS 原理
+          
+            
+          
+          从 ReentrantLock 看 AQS 原理
 序本文参照美团技术论坛：《从 ReentrantLock 的实现看 AQS 的原理和应用》一章。（站在巨人的肩膀上 XD）
 至于已经有这篇文章了，那为什么我还要写一篇呢？有几个原因：我希望能有自己的理解和认识，还可以加深印象。
 本文 AQS 源码所用的 JDK 版本为 JDK 8 。
 预备知识
 自旋锁、MCS 锁、CLH 锁
-ReentrantLo</div>
-      </a>
+ReentrantLo
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-12
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-12 13:08" pubdate>
+              2020-08-12
+            </time>
           </div>
         
         
@@ -259,31 +275,38 @@ ReentrantLo</div>
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/">今天，我终于冲出了外包的怪圈</a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/">今天，我终于冲出了外包的怪圈</a>
+      </h1>
 
-      <a href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/11/%E4%BB%8A%E5%A4%A9%EF%BC%8C%E6%88%91%E7%BB%88%E4%BA%8E%E5%86%B2%E5%87%BA%E4%BA%86%E5%A4%96%E5%8C%85%E7%9A%84%E6%80%AA%E5%9C%88/">
           
-        
-        <div>今天，我终于冲出了外包的怪圈
+          
+            
+          
+          今天，我终于冲出了外包的怪圈
 0. 序今年八月，由于疫情以及自身原因，每个工作都很难找，我大致上投了 50 多个简历，面试了不超过10家公司，终于有一个在我的期望内：非外包、人数多、比较知名。虽然工资比我预期的少了一些，但是其他地方已经非常满意了。
 当然，由于我自己的缘故，BAT 是异想天开的事情，网易阅文都不鸟我。
 
-说外包是个天坑，真的一点都没错，每次面试的时候，在介绍自己的项目时总会看到面试</div>
-      </a>
+说外包是个天坑，真的一点都没错，每次面试的时候，在介绍自己的项目时总会看到面试
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-11
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-11 18:40" pubdate>
+              2020-08-11
+            </time>
           </div>
         
         
@@ -298,28 +321,31 @@ ReentrantLo</div>
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
-            
               <a href="/tags/%E6%97%A5%E5%B8%B8/">日常</a>
+            
+              <a href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
             
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/08/05/Hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Hexo 常用命令</a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2020/08/05/Hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">Hexo 常用命令</a>
+      </h1>
 
-      <a href="/2020/08/05/Hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/05/Hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
           
-        
-        <div>Hexo 常用命令本文记录一下 Hexo 常用命令以及在过程中遇到的一些问题。
+          
+            
+          
+          Hexo 常用命令本文记录一下 Hexo 常用命令以及在过程中遇到的一些问题。
 常用命令
 创建一篇名为“文章标题”的文章：
 
@@ -342,13 +368,17 @@ hexo g -d
 
 
 
-</div>
-      </a>
+
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-05
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-05 11:37" pubdate>
+              2020-08-05
+            </time>
           </div>
         
         
@@ -361,30 +391,37 @@ hexo g -d
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
   <div class="row mx-auto index-card">
     
     
-    <div class="col-12 col-md-12 mx-auto index-info">
-      <a class="index-header" href="/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/">为什么我要写博客？</a>
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        <a href="/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/">为什么我要写博客？</a>
+      </h1>
 
-      <a href="/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/" class="index-excerpt">
-        
-        
+      <p class="index-excerpt">
+        <a href="/2020/08/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E8%A6%81%E5%86%99%E5%8D%9A%E5%AE%A2/">
           
-        
-        <div>为什么我要写博客？
+          
+            
+          
+          为什么我要写博客？
 第一篇博客只不过是自说自话，未来的路到底如何，一切还是未知数。
 唯一能够确定的是，自己的过去并不是我想要的。由于自己不甘于现状，不甘于做一个增删改查的底层搬砖员工，不想去匆匆了事；或者说，我自己，能否在未来，能够真正的扩展自己的视野，能够真正的成为那些我羡慕的人，能否每天充满挑战以及乐趣。这就是为何我想写博客的主要原因。
-虽然自己只是一个两年的底层搬砖员工，但是我已经嗅到了国内</div>
-      </a>
+虽然自己只是一个两年的底层搬砖员工，但是我已经嗅到了国内
+        </a>
+      </p>
 
       <div class="index-btm post-metas">
         
           <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>&nbsp;2020-08-01
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-08-01 15:47" pubdate>
+              2020-08-01
+            </time>
           </div>
         
         
@@ -406,7 +443,7 @@ hexo g -d
           </div>
         
       </div>
-    </div>
+    </article>
   </div>
 
 

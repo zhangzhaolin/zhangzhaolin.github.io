@@ -1,7 +1,7 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-
+<html lang="zh-CN" >
 
 
 
@@ -26,6 +26,7 @@
   <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
   
+    
     <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
   
 
@@ -34,7 +35,7 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
 
 
 
@@ -47,6 +48,7 @@
 
 
   <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.0.0"></head>
 
 
@@ -129,21 +131,22 @@
         
         
           <li class="nav-item" id="search-btn">
-            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
-                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
           </li>
+        
         
       </ul>
     </div>
   </div>
 </nav>
 
-    <div class="view intro-2" id="background" parallax=true
+    <div class="banner intro-2" id="background" parallax=true
          style="background: url('/img/default.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-          <div class="container text-center white-text fadeInUp">
+          <div class="container page-header text-center fade-in-up">
             <span class="h2" id="subtitle">
               
             </span>
@@ -152,7 +155,7 @@
               
   <div class="mt-3 post-meta">
     <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-    <time datetime="2020-08-11 18:40">
+    <time datetime="2020-08-11 18:40" pubdate>
       2020年8月11日 晚上
     </time>
   </div>
@@ -201,9 +204,11 @@
     <div class="col-lg-8 nopadding-md">
       <div class="container nopadding-md" id="board-ctn">
         <div class="py-5" id="board">
-          <div class="post-content mx-auto" id="post">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">今天，我终于冲出了外包的怪圈</h1>
             
-            <article class="markdown-body">
+            <div class="markdown-body" id="post-body">
               <h1 id="今天，我终于冲出了外包的怪圈"><a href="#今天，我终于冲出了外包的怪圈" class="headerlink" title="今天，我终于冲出了外包的怪圈"></a>今天，我终于冲出了外包的怪圈</h1><p><img src="https://cdn.pixabay.com/photo/2020/08/09/21/51/cat-5476513_960_720.jpg" srcset="/img/loading.gif"></p>
 <h1 id="0-序"><a href="#0-序" class="headerlink" title="0. 序"></a>0. 序</h1><p>今年八月，由于疫情以及自身原因，每个工作都很难找，我大致上投了 50 多个简历，面试了不超过10家公司，终于有一个在我的期望内：非外包、人数多、比较知名。虽然工资比我预期的少了一些，但是其他地方已经非常满意了。</p>
 <p>当然，由于我自己的缘故，BAT 是异想天开的事情，网易阅文都不鸟我。</p>
@@ -383,7 +388,7 @@
 <li>能看完《Spring Cloud 微服务入门》这本书</li>
 </ul>
 
-            </article>
+            </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
@@ -399,9 +404,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E6%97%A5%E5%B8%B8/">日常</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
                     
                   </div>
                 
@@ -411,7 +416,7 @@
               
               
                 <div class="post-prevnext row">
-                  <div class="post-prev col-6">
+                  <article class="post-prev col-6">
                     
                     
                       <a href="/2020/08/12/%E4%BB%8E-ReentrantLock-%E7%9C%8B-AQS-%E5%8E%9F%E7%90%86/">
@@ -420,8 +425,8 @@
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
-                  </div>
-                  <div class="post-next col-6">
+                  </article>
+                  <article class="post-next col-6">
                     
                     
                       <a href="/2020/08/05/Hexo-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
@@ -430,21 +435,20 @@
                         <i class="iconfont icon-arrowright"></i>
                       </a>
                     
-                  </div>
+                  </article>
                 </div>
               
             </div>
 
             
               <!-- Comments -->
-              <div class="comments" id="comments">
+              <article class="comments" id="comments">
                 
                 
   <script type="text/javascript">
     function loadUtterances() {
       var s = document.createElement('script');
       s.setAttribute('src', 'https://utteranc.es/client.js');
-      s.defer = false
       s.setAttribute('repo', 'zhangzhaolin/zhangzhaolin.github.io');
       s.setAttribute('issue-term', 'pathname');
       
@@ -452,16 +456,15 @@
       
       s.setAttribute('theme', 'github-light');
       s.setAttribute('crossorigin', 'anonymous');
-      var e = document.getElementsByTagName('script')[0];
-      e.parentNode.insertBefore(s, e);
+      document.getElementById('comments').appendChild(s);
     }
-    createObserver(loadUtterances, 'comments')
+    waitElementVisible('comments', loadUtterances)
   </script>
 
 
-              </div>
+              </article>
             
-          </div>
+          </article>
         </div>
       </div>
     </div>
@@ -565,7 +568,7 @@
 
       tocbot.init({
         tocSelector: '#tocbot',
-        contentSelector: 'article.markdown-body',
+        contentSelector: '#post-body',
         headingSelector: 'h1,h2,h3,h4,h5,h6',
         linkClass: 'tocbot-link',
         activeLinkClass: 'tocbot-active-link',
