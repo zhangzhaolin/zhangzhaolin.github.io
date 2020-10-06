@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" >
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
 
 
@@ -25,11 +25,11 @@
 
 <!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_6peoq002giu.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_pf9vaxs7x7b.css">
 
 
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 
 
 <link  rel="stylesheet" href="/css/main.css" />
@@ -47,7 +47,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>一去不复返</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -126,6 +126,11 @@
           </li>
         
         
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -176,9 +181,9 @@
     
     <div class="category row">
       <a
-        class="category-item  list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckefgde440007nctu2966eyxg" role="tab" data-toggle="collapse" href="#collapse-ckefgde440007nctu2966eyxg"
-        aria-expanded="true"
+        class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+        id="heading-ckfxz4mu50008y0tue5gi6a4z" role="tab" data-toggle="collapse" href="#collapse-ckfxz4mu50008y0tue5gi6a4z"
+        aria-expanded="false"
       >
         Java
         <i class="iconfont icon-arrowright"></i>
@@ -190,8 +195,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckefgde440007nctu2966eyxg" class="collapse in show" role="tabpanel"
-       aria-labelledby="heading-ckefgde440007nctu2966eyxg">
+  <div id="collapse-ckfxz4mu50008y0tue5gi6a4z" class="collapse in " role="tabpanel"
+       aria-labelledby="heading-ckfxz4mu50008y0tue5gi6a4z">
     
   
   
@@ -200,7 +205,7 @@
     <div class="category-sub row">
       <a
         class="category-subitem collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckefgde45000anctu0sikh2s1" role="tab" data-toggle="collapse" href="#collapse-ckefgde45000anctu0sikh2s1"
+        id="heading-ckfxz4mu7000fy0tugwg140ax" role="tab" data-toggle="collapse" href="#collapse-ckfxz4mu7000fy0tugwg140ax"
         aria-expanded="false"
       >
         多线程
@@ -213,8 +218,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckefgde45000anctu0sikh2s1" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckefgde45000anctu0sikh2s1">
+  <div id="collapse-ckfxz4mu7000fy0tugwg140ax" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckfxz4mu7000fy0tugwg140ax">
     
     
     
@@ -249,7 +254,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckefgde430004nctudggg7j53" role="tab" data-toggle="collapse" href="#collapse-ckefgde430004nctudggg7j53"
+        id="heading-ckfxz4mu30005y0tuboxz901i" role="tab" data-toggle="collapse" href="#collapse-ckfxz4mu30005y0tuboxz901i"
         aria-expanded="false"
       >
         日常
@@ -262,8 +267,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckefgde430004nctudggg7j53" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckefgde430004nctudggg7j53">
+  <div id="collapse-ckfxz4mu30005y0tuboxz901i" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckfxz4mu30005y0tuboxz901i">
     
     
     
@@ -285,7 +290,7 @@
     <div class="category row">
       <a
         class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
-        id="heading-ckefgde48000mnctu7w1l9z0v" role="tab" data-toggle="collapse" href="#collapse-ckefgde48000mnctu7w1l9z0v"
+        id="heading-ckfxz4mu6000by0tudwcq0t5b" role="tab" data-toggle="collapse" href="#collapse-ckfxz4mu6000by0tudwcq0t5b"
         aria-expanded="false"
       >
         面试
@@ -298,8 +303,8 @@
       <div class="category-collapse">
         
           
-  <div id="collapse-ckefgde48000mnctu7w1l9z0v" class="collapse in" role="tabpanel"
-       aria-labelledby="heading-ckefgde48000mnctu7w1l9z0v">
+  <div id="collapse-ckfxz4mu6000by0tudwcq0t5b" class="collapse in" role="tabpanel"
+       aria-labelledby="heading-ckfxz4mu6000by0tudwcq0t5b">
     
     
     
@@ -387,6 +392,10 @@
 
   
     <script  src="/js/lazyload.js" ></script>
+  
+
+
+
   
 
 
